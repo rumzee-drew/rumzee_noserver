@@ -1,7 +1,4 @@
-import { useState, 
-  useMemo
- } from 'react'
-//import './App.css'
+import { useState, useMemo } from 'react'
 import NewGamePopup from './components/NewGamePopup'
 import { Hand } from './models/types'
 import { Phase10Hands } from './models/constants'
@@ -17,13 +14,6 @@ function App() {
   const totals: number[] | undefined = useMemo(() => {
     if (scores?.[0] && players) {
       const tempTotals: number[] = new Array(players.length).fill(0)
-      // for (let i = 0; i < scores.length; i++) {
-      //   for (let j = 0; j < scores[i].length; j++) {
-      //     const roundScore = scores[i][j] ?? 0
-      //     tempTotals[j] = tempTotals[j] + roundScore
-      //   }
-      // }
-
       for (let i = 0; i < players.length; i++) {
         let tmpTotal: number = 0;
         for (let j = 0; j < scores.length; j++) {

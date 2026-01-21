@@ -53,6 +53,9 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+button.dark-gray {
+  background-color: #545454;
+}
 .center {
   display: block;
   margin-right: auto;
@@ -78,7 +81,6 @@ button:focus-visible {
 }
 
 h1 {
-  text-decoration: underline;
   text-align: center;
 }
 h2 {
@@ -90,6 +92,7 @@ h4 {
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 30px;
+  font-size: 22px;
 }
 
 dialog {
@@ -98,6 +101,7 @@ dialog {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80vw;
+  overflow: hidden;
 }
 
 .dialog-bg {
@@ -130,6 +134,9 @@ dialog {
 .mt-5 {
   margin-top: 5px;
 }
+.mt-10 {
+  margin-top: 10px;
+}
 .mt-40 {
   margin-top: 40px;
 }
@@ -161,6 +168,7 @@ input {
 
 .error-red {
   color: #CC0000;
+  text-shadow: 2px 2px 4px black;
 }
 
 .block {
@@ -202,6 +210,9 @@ td a {
 .w-100 {
   width: 100%;
 }
+.w-49 {
+  width: 49%;
+}
 
 .h-100 {
   height: 100%;
@@ -228,4 +239,96 @@ td input {
   height: 100%;
   top: 0;
   left: 0;
+}
+
+.rainbow-border {
+  /* 1. Apply a rainbow gradient background */
+  background: linear-gradient(to right, #ef3550, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+  background-size: 400% 100%; /* Make the gradient wider than the text to allow movement */
+  /* 2. Clip the background to the text and make the text transparent */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: #242424;
+  /* 3. Apply the animated glow/outline */
+  animation: rainbow-animation 6s linear infinite, 
+             glow-animation 1.5s ease-in-out infinite alternate;
+}
+.rainbow-border.white {
+  color: #ffffff;
+}
+
+/* Keyframes for the moving rainbow gradient background */
+@keyframes rainbow-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Keyframes for the pulsating text-shadow glow */
+@keyframes glow-animation {
+  0% {
+    /* Multiple shadows create a thick, colored outline/glow */
+    text-shadow: 
+      0 0 5px #ef3550, 
+      0 0 10px #f48fb1, 
+      0 0 15px #7e57c2, 
+      0 0 20px #2196f3;
+  }
+  100% {
+    text-shadow: 
+      0 0 10px #26c6da, 
+      0 0 20px #43a047, 
+      0 0 30px #eeff41, 
+      0 0 40px #f9a825,
+      0 0 50px #ff5722;
+  }
+}
+
+@property --a { /* must register --a to animate it */
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false /* set on pseudo, nowhere to be inherited, better perf if set false */
+}
+
+.rainbow-btn {
+  position: relative;
+  border-radius: .75em;
+  border: 1px solid white !important;
+}
+
+.rainbow-btn::before {
+  position: absolute;
+  z-index: -1;
+  inset: -.5em;
+  border: solid 2em;
+  border-image:
+    conic-gradient(from var(--a), #669900, #99cc33, #ccee66, #006699, #3399cc, #990066, 
+        #cc3399, #ff6600, #ff9900, #ffcc00, #669900) 1;
+  filter: blur(1em);
+  animation: a 4s linear infinite;
+  content: '';
+  transform: scale(.8);
+  top: -35%;
+}
+
+/* animate --a from its initial-value 0deg to 1turn */
+@keyframes a { to { --a: 1turn } }
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.text-center {
+  text-align: center;
 }

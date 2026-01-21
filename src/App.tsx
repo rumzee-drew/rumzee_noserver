@@ -71,8 +71,8 @@ function App() {
 
   return (
     <>
-      <h1 className="underline">
-        Rumzee
+      <h1 className="rainbow-border">
+        ♣ Rumzee ♠
       </h1>
       <button className='center mb-30' onClick={openPopup}>New Game</button>
       {newGameVisible && (

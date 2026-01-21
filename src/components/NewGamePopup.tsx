@@ -23,8 +23,13 @@ function NewGamePopup(props: NewGamePopupProps) {
         props.onClose()
     }  
 
-    const addPlayer = () => {
-        setPlayers([...players, ''])
+    const addPlayer = (index: number) => {
+        const tmpPlayers: string[] = [
+            ...players.slice(0, index),
+            '',
+            ...players.slice(index)
+        ]
+        setPlayers(tmpPlayers)
     }
 
     const nameChange = (event: any, index: number) => {
@@ -48,19 +53,18 @@ function NewGamePopup(props: NewGamePopupProps) {
 
                     {players.map((player, index) => {
                         return (
-                            <div key={`plyrInput-${index}`}>
-                                <h4>{`Player ${index + 1} Name:`}</h4>
+                            <div key={`plyrInput-${index}`} className="flex justify-between flex-wrap">
+                                <h4 className="text-center w-100 rainbow-border white mb-10">{`Player ${index + 1} Name:`}</h4>
                                 <input id={`name-${index}`} type="text" placeholder="Jane Doe" value={player} onChange={(event) => nameChange(event, index)}></input>
-                                <button onClick={() => removePlayer(index)} className="mt-5">Remove Player</button>
+                                <button onClick={() => addPlayer(index + 1)} className="w-49 mt-5 dark-gray">Add Player</button>
+                                <button onClick={() => removePlayer(index)} disabled={players.length < 2} className="w-49 mt-5">Remove Player</button>
                             </div>
                         )
                     })}
                     <div className="mt-40">
-                        <button onClick={addPlayer} className="mr-10">Add Player</button>
-
-                        <button onClick={submit}>Start</button>
+                        <button onClick={submit} className="rainbow-btn">Start</button>
                         {errorMessage && (
-                            <span className="error-red block">{errorMessage}</span>
+                            <span className="error-red mt-10 block">{errorMessage}</span>
                         )}
                     </div>
                 </div>

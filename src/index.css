@@ -164,6 +164,9 @@ input {
   box-sizing: border-box;
   width: 100%;
   height: 32px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
 }
 
 .error-red {
@@ -287,36 +290,6 @@ td input {
   }
 }
 
-@property --a { /* must register --a to animate it */
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false /* set on pseudo, nowhere to be inherited, better perf if set false */
-}
-
-.rainbow-btn {
-  position: relative;
-  border-radius: .75em;
-  border: 1px solid white !important;
-}
-
-.rainbow-btn::before {
-  position: absolute;
-  z-index: -1;
-  inset: -.5em;
-  border: solid 2em;
-  border-image:
-    conic-gradient(from var(--a), #669900, #99cc33, #ccee66, #006699, #3399cc, #990066, 
-        #cc3399, #ff6600, #ff9900, #ffcc00, #669900) 1;
-  filter: blur(1.5em);
-  animation: a 4s linear infinite;
-  content: '';
-  transform: scale(.7, .56);
-  top: -35%;
-}
-
-/* animate --a from its initial-value 0deg to 1turn */
-@keyframes a { to { --a: 1turn } }
-
 .flex {
   display: flex;
 }
@@ -331,4 +304,61 @@ td input {
 
 .text-center {
   text-align: center;
+}
+
+.rainbow-btn {
+    border: none !important;
+    outline: none !important;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+}
+
+.rainbow-btn:active {
+  color: #000;
+}
+
+.rainbow-btn:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 8px;
+}
+
+.rainbow-btn:before {
+  opacity: 1;
+}
+
+.rainbow-btn:active:after {
+    background: transparent;
+}
+
+.rainbow-btn:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 8px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
 }

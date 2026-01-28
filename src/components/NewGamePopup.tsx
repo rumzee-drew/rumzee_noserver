@@ -1,16 +1,23 @@
 import { useState } from "react"
+import { Game } from "../models/types"
 
 type NewGamePopupProps = {
     onClose: () => void
-    onSubmit: (players:string[]) => void
+    onSubmit: (players:string[], game:Game) => void
+    games: Game[]
 }
 
 function NewGamePopup(props: NewGamePopupProps) {
     const [players, setPlayers] = useState<string[]>([''])
     const [errorMessage, setErrorMessage] = useState<string>()
+    const [game, setGame] = useState<Game>()
 
     const submit = () => {
         setErrorMessage('')
+        if (!game) {
+            setErrorMessage("You must choose a game.")
+            return;
+        }
         if (!players || players.length == 0) {
             setErrorMessage("You need to set players for the game.")
             return;
@@ -19,7 +26,7 @@ function NewGamePopup(props: NewGamePopupProps) {
             setErrorMessage("Each player must have a name.")
             return;
         }
-        props.onSubmit(players)
+        props.onSubmit(players, game)
         props.onClose()
     }  
 
@@ -44,6 +51,10 @@ function NewGamePopup(props: NewGamePopupProps) {
         setPlayers(newPlayers)
     }
 
+    const setGameState = (game: string) => {
+        setGame(props.games.find(gm => gm.name == game))
+    }
+
     return (
         <>
             <div className="dialog-bg" onClick={props.onClose}></div>
@@ -51,18 +62,30 @@ function NewGamePopup(props: NewGamePopupProps) {
                 <div className="relative">
                     <a className="close-btn" onClick={props.onClose}>X</a>
 
+                    <div className="flex justify-between flex-wrap">
+                        <h4 className="text-center w-100 white mb-10">Game</h4>
+                        <select id='gameSelect' onChange={(event) => setGameState(event.target.value)} required>
+                            <option key="gameSelect-disabled" selected disabled hidden value="">Select a game</option>
+                            {props.games.map((game, index) => {
+                                return (
+                                    <option key={`gameSelect-${index}`} value={game.name}>{game.name}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+
                     {players.map((player, index) => {
                         return (
                             <div key={`plyrInput-${index}`} className="flex justify-between flex-wrap">
-                                <h4 className="text-center w-100 rainbow-border white mb-10">{`Player ${index + 1} Name:`}</h4>
+                                <h4 className="text-center w-100 white mb-10">{`Player ${index + 1} Name:`}</h4>
                                 <input id={`name-${index}`} type="text" placeholder="Jane Doe" value={player} onChange={(event) => nameChange(event, index)}></input>
-                                <button onClick={() => addPlayer(index + 1)} className="w-49 mt-5 dark-gray">Add Player</button>
-                                <button onClick={() => removePlayer(index)} disabled={players.length < 2} className="w-49 mt-5">Remove Player</button>
+                                <button onClick={() => addPlayer(index + 1)} className="w-49 mt-5">Add Player</button>
+                                <button onClick={() => removePlayer(index)} disabled={players.length < 2} className="w-49 mt-5 dark-gray">Remove Player</button>
                             </div>
                         )
                     })}
                     <div className="mt-40">
-                        <button onClick={submit} className="rainbow-btn">Start</button>
+                        <button onClick={submit} className="submit">Start</button>
                         {errorMessage && (
                             <span className="error-red mt-10 block">{errorMessage}</span>
                         )}

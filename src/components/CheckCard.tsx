@@ -1,13 +1,13 @@
 import { Hand } from "../models/types"
 
-type HandCardProps = {
+type CheckCardProps = {
     players: string[]
     hands: Hand[]
     handState: boolean[][]
     cellToggle: (handIndex: number, playerIndex: number) => void
 }
 
-function HandCard(props: HandCardProps) {    
+function CheckCard(props: CheckCardProps) {    
     return (
         <div className="center fit-content">
             <h2>Hands</h2>
@@ -27,7 +27,7 @@ function HandCard(props: HandCardProps) {
                                 <td className={`${hand.color}`}>{hand.label}</td>
                                 {props.handState[y].map((value, x) => {
                                     return (
-                                        <td key={`td-${y}-${x}`} className="relative">
+                                        <td key={`td-${y}-${x}`} className={`relative ${y % 2 == 0 ? 'style-1' : 'style-2'}`}>
                                             <a onClick={() => props.cellToggle(y, x)}></a>
                                             {value && (
                                                 <span className="checkmark">✔</span>
@@ -40,8 +40,8 @@ function HandCard(props: HandCardProps) {
                     })}
                 </tbody>
             </table>
-        </div>
+        </div>  
     )
 }
 
-export default HandCard
+export default CheckCard

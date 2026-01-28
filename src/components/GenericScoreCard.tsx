@@ -1,4 +1,4 @@
-type ScoreCardProps = {
+type GenericScoreCardProps = {
     players: string[]
     addRound: () => void
     scoreState: number[][]
@@ -6,11 +6,13 @@ type ScoreCardProps = {
     totals: number[]
 }
 
-function ScoreCard(props: ScoreCardProps) {
+function GenericScoreCard(props: GenericScoreCardProps) {
     return (
-        <div className="center fit-content mt-40 pb-50">
-            <h2>Scores</h2>
-            <button className="mb-10" onClick={props.addRound}>Add Round</button>
+        <div className="center fit-content">
+            <div className="flex w-100 justify-between">
+                <h2>Scores</h2>
+                <button className="mb-10" onClick={props.addRound}>Add Round</button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -27,12 +29,11 @@ function ScoreCard(props: ScoreCardProps) {
                                 <td>{`Round ${y + 1}`}</td>
                                 {row.map((value, x) => {
                                     return (
-                                        <td key={`td-${y}-${x}`} className="relative">
+                                        <td key={`td-${y}-${x}`} className={`relative wider ${y % 2 == 0 ? 'style-1' : 'style-2'}`}>
                                             <input 
                                                 id={`input-${y}-${x}`} 
                                                 type="number" 
                                                 step="1" 
-                                                min="0" 
                                                 onInput={(event) => props.scoreUpdate(event, y, x)} 
                                                 value={value}/>
                                         </td>
@@ -55,4 +56,4 @@ function ScoreCard(props: ScoreCardProps) {
     )
 }
 
-export default ScoreCard
+export default GenericScoreCard

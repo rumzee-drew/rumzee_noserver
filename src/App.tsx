@@ -86,7 +86,7 @@ function App() {
       </div>
       {game && game.rules && (
         <div className='rules-container'>
-          <h3 className={`${game.rules ? 'mb-10' : 'mb-30'}`}>{game.name}</h3>
+          <h3 className="mb-10">{game.name}</h3>
           <details className='rule-card'>
             <summary><h2>Rules</h2></summary>
             {game.rules.map((rul, index) => {
@@ -94,6 +94,9 @@ function App() {
             })}
           </details>
         </div>
+      )}
+      {game && !game.rules && (
+        <div className='mb-70'></div>
       )}
       {popupVisible && (
         <NewGamePopup

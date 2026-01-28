@@ -240,6 +240,9 @@ dialog button.submit {
 .mb-50 {
   margin-bottom: 50px;
 }
+.mb-70 {
+  margin-bottom: 70px;
+}
 
 .pb-70 {
   padding-bottom: 70px !important;
@@ -454,12 +457,12 @@ details[open] summary::after {
   color: #fff;
 }
 .color-scheme-1 button {
-  background-color: var(--hornet-light-purple);
+  background-color: var(--medit-clay);
   color: #fff;
   border: 1px solid #fff;
 }
 .color-scheme-1 button:hover {
-  background-color: var(--hornet-dark-purple);
+  background-color: var(--medit-clay-red);
 }
 .color-scheme-1 button:disabled {
   background-color: var(--all-disabled-dark);

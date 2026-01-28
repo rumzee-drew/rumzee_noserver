@@ -30,7 +30,7 @@ function CheckCard(props: CheckCardProps) {
                                         <td key={`td-${y}-${x}`} className={`relative ${y % 2 == 0 ? 'style-1' : 'style-2'}`}>
                                             <a onClick={() => props.cellToggle(y, x)}></a>
                                             {value && (
-                                                <span className="checkmark">✔</span>
+                                                <span className="checkmark">✔&#xFE0E;</span>
                                             )}
                                         </td>
                                     )

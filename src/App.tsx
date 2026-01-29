@@ -11,7 +11,7 @@ function App() {
   const [popupVisible, setPopupVisible] = useState(false)
   const [game, setGame] = useState<Game>()
   const [handState, setHandState] = useState<boolean[][]>([[]])
-  const [scores, setScores] = useState<number[][]>()
+  const [scores, setScores] = useState<(number|null)[][]>()
   const totals: number[] | undefined = useMemo(() => {
     if (scores?.[0] && players) {
       const tempTotals: number[] = new Array(players.length).fill(0)
@@ -56,7 +56,7 @@ function App() {
 
   const addRound = () => {
     if (scores && players) {
-      const tempScores: number[][] = [...scores]
+      const tempScores: (number|null)[][] = [...scores]
       tempScores.push(new Array(players.length).fill(null))
       setScores(tempScores)
     }
@@ -65,12 +65,21 @@ function App() {
   const scoreUpdate = (event: any, roundIndex: number, playerIndex: number) => {
     if (scores) {
       console.log(`params. targ: ${event.target.value}. roundIndex: ${roundIndex}. playerIndex: ${playerIndex}.`)
-      const val:number = Number(event.target.value)
-      const tempScore: number[][] = [...scores]
-      const tempRow = tempScore[roundIndex]
-      tempRow[playerIndex] = val as number
-      tempScore[roundIndex] = tempRow
-      setScores(tempScore)
+      if (!event.target.value || event.target.value == "-") {
+        const tempScore: (number|null)[][] = [...scores]
+        const tempRow = tempScore[roundIndex]
+        tempRow[playerIndex] = null
+        tempScore[roundIndex] = tempRow
+        setScores(tempScore)
+      }
+      else if (/\d/.test(event.target.value)) {
+        const val:number = Number(event.target.value)
+        const tempScore: (number|null)[][] = [...scores]
+        const tempRow = tempScore[roundIndex]
+        tempRow[playerIndex] = val as number
+        tempScore[roundIndex] = tempRow
+        setScores(tempScore)
+      }
     }
   }
 

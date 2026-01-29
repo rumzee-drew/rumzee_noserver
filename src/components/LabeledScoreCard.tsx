@@ -1,9 +1,10 @@
 import { Hand } from "../models/types"
+import { preventImproperDashes, handleAllowedNumericalCharacters } from "../utility/validation"
 
 type LabeledScoreCardProps = {
     players: string[]
     hands: Hand[],
-    scoreState: number[][]
+    scoreState: (number|null)[][]
     scoreUpdate: (event: any, roundIndex: number, playerIndex: number) => void
     totals: number[]
 }
@@ -33,10 +34,11 @@ function LabeledScoreCard(props: LabeledScoreCardProps) {
                                         <td key={`td-${y}-${x}`} className={`relative wider ${y % 2 == 0 ? 'style-1' : 'style-2'}`}>
                                             <input 
                                                 id={`input-${y}-${x}`} 
-                                                type="number" 
-                                                step="1" 
+                                                type="text" 
+                                                onKeyDown={(event) => handleAllowedNumericalCharacters(event)}
+                                                onBeforeInput={(event) => preventImproperDashes(event)}
                                                 onInput={(event) => props.scoreUpdate(event, y, x)} 
-                                                value={value}/>
+                                                value={value || undefined}/>
                                         </td>
                                     )
                                 })}
